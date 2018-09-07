@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios'
 import styles from '../style/Gif.css'
+import MyGif from './gif.jsx'
 
 export default class MyGifs extends React.Component {
 
@@ -63,26 +64,9 @@ export default class MyGifs extends React.Component {
       <div className="container">
         <div className="row" style={{flex: 1, flexDirection: 'row', alignItems: 'left', justifyContent: 'space-evenly'}}>
           {this.state.gifs.map( (gif, index) => (
-            <div className={'parent'}>
-                <img
-                  alt={""}
+                <MyGif
                   src={gif.images.original.url}
-                  className={'Gif'}
-                  key={index}
-                  style={{
-                    height: gif.images.original.height*0.5,
-                    width: gif.images.original.width*0.5
-                  }}>
-                </img>
-              <div className={'img-heart'}>
-                <img
-                alt={""}
-                src={'../img/heart.png'}
-                key={index}
-                >
-              </img>
-            </div>
-            </div>
+                />
             ))}
         </div>
       </div>

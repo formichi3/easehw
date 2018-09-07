@@ -2,6 +2,9 @@ import React from 'react';
 import axios from 'axios'
 import styles from '../style/Gif.css'
 
+import pinkHeart from '../img/heart.png'
+import whiteHeart from '../img/whiteHeart.png'
+
 
 export default class MyGif extends React.Component {
 
@@ -9,7 +12,7 @@ export default class MyGif extends React.Component {
     super();
     this.state = {
       favorite: false,
-      url: "http://cliparts.co/cliparts/8cx/ng8/8cxng8pzi.svg"
+      src: whiteHeart
     }
     this.toggleFavorite = this.toggleFavorite.bind(this);
   }
@@ -26,20 +29,19 @@ export default class MyGif extends React.Component {
   }
 
   toggleFavorite(){
-  console.log("toggling favorite", this.state.url);
-
+    console.log(this.state.src);
     if (!this.state.favorite){
-      this.setState({favorite: true, url: "http://www.pngmart.com/files/1/Pink-Heart-Transparent-Background.png"})
+      this.setState({favorite: true, src: pinkHeart})
     } else {
-      this.setState({favorite: false, url: "http://cliparts.co/cliparts/8cx/ng8/8cxng8pzi.svg"})
+      this.setState({favorite: false, src: whiteHeart})
     }
   }
 
   render() {
     return (
-      <div class="parent">
+      <div className="parent">
           <img className="Gif" src={this.props.src} onClick={this.toggleFavorite}/>
-          <div className="child"><img class="img-heart" src={this.state.url} onClick={this.toggleFavorite}/></div>
+          <div className="child"><img className="img-heart" src={this.state.src} onClick={this.toggleFavorite}/></div>
       </div>
       );
     }

@@ -15,7 +15,7 @@ class App extends Component {
           <MySearchBar className="Search-bar"/>
         </header>
         <div className="Gifs">
-          <MyGif src={"https://media3.giphy.com/media/9GIE427OrcxhgugeSa/giphy.gif"}/>
+          <MyGifs/>
         </div>
       </div>
     );
