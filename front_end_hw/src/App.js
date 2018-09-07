@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import MyTable from './components/table.jsx'
-import MyGif from './components/gif.jsx'
+import MyGifs from './components/gif.jsx'
+import MySearchBar from './components/searchBar.jsx'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import './App.css';
@@ -9,15 +10,13 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-      <MuiThemeProvider>
-      <div className="App" style={{backgroundColor: '#222'}}>
+      <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to Joe's Gifs</h1>
+          <h1 className="App-title">Welcome to Joes Gifs</h1>
+          <MySearchBar className="Search-bar"/>
         </header>
-        <MyGif/>
+        <MyGifs/>
       </div>
-      </MuiThemeProvider>
     );
   }
 }

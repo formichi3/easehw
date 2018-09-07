@@ -5,7 +5,7 @@ import axios from 'axios'
 import backgroundImage from '../img/gradientBackground.png'
 
 
-export default class MyGif extends React.Component {
+export default class MyGifs extends React.Component {
 
   constructor() {
     super();
