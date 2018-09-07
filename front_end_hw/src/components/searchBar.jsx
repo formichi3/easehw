@@ -1,5 +1,4 @@
 import React from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 
@@ -13,16 +12,21 @@ export default class MySearchBar extends React.Component {
       text: ''
     }
     this.handleChange = this.handleChange.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
   }
 
   componentWillMount(){
   }
 
-  handleChange() {
-    console.log("Button clicked");
+  handleChange(event) {
+    this.setState({text: event.target.value})
   };
 
-
+  onKeyPress(event) {
+    if (event.key === "Enter"){
+      console.log("Searching!");
+    }
+  }
 
   render() {
     const inputStyle = {
@@ -38,7 +42,8 @@ export default class MySearchBar extends React.Component {
           type="search"
           margin="normal"
           autoFocus={true}
-          onChange={this.handleChange()}
+          onChange={this.handleChange}
+          onKeyPress={this.onKeyPress}
           inputStyle={inputStyle}
           />
         </MuiThemeProvider>

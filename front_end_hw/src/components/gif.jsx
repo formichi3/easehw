@@ -1,8 +1,5 @@
 import React from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import axios from 'axios'
-import backgroundImage from '../img/gradientBackground.png'
 
 
 export default class MyGifs extends React.Component {
@@ -22,6 +19,7 @@ export default class MyGifs extends React.Component {
   }
   // retrieve top trending gifs, # specified by numGifs in state
   componentWillMount(){
+    console.log(this.props.searchTerm);
     this.getMoreGifs()
   }
 
@@ -37,9 +35,7 @@ export default class MyGifs extends React.Component {
   }
 
   updateWindowDimensions(){
-    this.setState({width: window.innerWidth, height: window.innerHeight}, () => {
-      console.log('height, width: ', this.state.height, ' ', this.state.width);
-    })
+    this.setState({width: window.innerWidth, height: window.innerHeight})
   }
 
   trackScrolling() {
@@ -50,8 +46,6 @@ export default class MyGifs extends React.Component {
     const windowBottom = windowHeight + window.pageYOffset;
     if (windowBottom >= docHeight) {
       this.getMoreGifs()
-    } else {
-      console.log("not at bottom");
     }
   }
 
@@ -65,18 +59,12 @@ export default class MyGifs extends React.Component {
   }
 
   render() {
-    const gifStyle = {
-      float: 'middle',
-      verticalAlign: 'middle',
-      padding: '5px',
-      height: 0.2*this.state.height,
-      width: 0.25*this.state.width
-    }
     return (
       <div className="container">
         <div className="row" style={{flex: 1, flexDirection: 'row', alignItems: 'left', justifyContent: 'space-evenly'}}>
           {this.state.gifs.map( (gif, index) => (
             <img
+              alt={""}
               src={gif.images.original.url}
               style={{
               verticalAlign: 'middle',
