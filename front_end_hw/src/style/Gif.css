@@ -1,0 +1,28 @@
+.Gif {
+  vertical-align: middle;
+  justify-content: center;
+  margin: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 8px 0 black;
+  z-index: 0;
+}
+
+.parent{
+    position:absolute;
+    z-index:0;
+}
+
+.child{
+    position:absolute;
+    height: 20px;
+    width: 20px;
+    z-index:1;
+    bottom:12px;
+    right: 12px;
+}
+
+.img-heart {
+  height: 15px;
+  width: 15px;
+}
