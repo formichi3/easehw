@@ -2,6 +2,7 @@ import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import MySearchBar from './searchBar'
 import TextField from 'material-ui/TextField';
+import styles from '../style/Navbar.css'
 
 
 
@@ -36,9 +37,10 @@ export default class MyNavBar extends React.Component {
       color: "white"
     }
     return (
-      <header className="App-header">
-        <h1 className="App-title">Welcome to Joe's Gifs</h1>
-        <MySearchBar className="Search-bar"/>
+      <header className="navbar">
+        <h1 className="title">Welcome to Joes Gifs</h1>
+        <MySearchBar className="searchBar" focus={true}/>
       </header>
+    )
     }
   }

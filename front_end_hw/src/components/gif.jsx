@@ -40,7 +40,7 @@ export default class MyGif extends React.Component {
   render() {
     return (
       <div className="parent">
-          <img className="Gif" src={this.props.src} onClick={this.toggleFavorite}/>
+          <img className="Gif" src={this.props.src} onClick={this.toggleFavorite} style={this.props.style}/>
           <div className="child"><img className="img-heart" src={this.state.src} onClick={this.toggleFavorite}/></div>
       </div>
       );

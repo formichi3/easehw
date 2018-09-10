@@ -1,16 +1,11 @@
 .App {
+  display: flex;
   text-align: center;
   background-image: linear-gradient(to bottom right,#222,white);
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+  position: sticky;
 }
 
 .App-header {
-  display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: #222;
@@ -21,13 +16,29 @@
   position: fixed;
 }
 
-.Search-bar {
+.test {
+  display: flex;
+  background: red;
+  width: 80%;
+  height: 100%;
   margin-left: auto;
-  color: white;
 }
 
-.Gifs {
-  padding-top: 160px;
+.navbar {
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  background-color: #222;
+  padding: 10px;
+  position: fixed;
+  height: 100%;
+  width: 20%;
+}
+
+.gifs {
+  display: flex;
+  margin-left: auto;
 }
 
 .App-title {

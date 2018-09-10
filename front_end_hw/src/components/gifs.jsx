@@ -1,7 +1,9 @@
 import React from 'react';
 import axios from 'axios'
-import styles from '../style/Gif.css'
 import MyGif from './gif.jsx'
+import styles from '../style/Gifs.css'
+
+
 
 export default class MyGifs extends React.Component {
 
@@ -9,7 +11,7 @@ export default class MyGifs extends React.Component {
     super();
     this.state = {
       gifs: [],
-      numGifs: 20,
+      numGifs: 25,
       offSet: 0,
       width: 0,
       height: 0
@@ -20,7 +22,6 @@ export default class MyGifs extends React.Component {
   }
   // retrieve top trending gifs, # specified by numGifs in state
   componentWillMount(){
-    console.log(styles.Gif);
     this.getMoreGifs()
   }
 
@@ -61,15 +62,18 @@ export default class MyGifs extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="row" style={{flex: 1, flexDirection: 'row', alignItems: 'left', justifyContent: 'space-evenly'}}>
+        <div className="row">
           {this.state.gifs.map( (gif, index) => (
                 <MyGif
+                  className="column"
                   src={gif.images.original.url}
+                  style={{
+                    height: gif.images.original.height*0.5,
+                    width: gif.images.original.width*0.5
+                  }}
                 />
             ))}
         </div>
-      </div>
       );
     }
   }

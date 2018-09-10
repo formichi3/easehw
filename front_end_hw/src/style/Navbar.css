@@ -1,0 +1,20 @@
+.navbar {
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  background-color: #222;
+  padding: 10px;
+  position: fixed;
+  height: 100%;
+  width: 20%;
+}
+
+.title {
+  color: white;
+  font-size: 20px;
+}
+
+.searchBar {
+  position: fixed;
+}

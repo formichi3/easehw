@@ -40,11 +40,9 @@ export default class MySearchBar extends React.Component {
           id="search"
           placeholder="Search Gifs ..."
           type="search"
-          margin="normal"
-          autoFocus={true}
+          autoFocus={this.props.focus}
           onChange={this.handleChange}
           onKeyPress={this.onKeyPress}
-          inputStyle={inputStyle}
           />
         </MuiThemeProvider>
       );
