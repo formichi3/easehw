@@ -23,5 +23,19 @@
 }
 
 .favorites {
-  align-self: center;
+  position: relative;
+  overflow-y: scroll;
+  height: 1000px
+}
+
+.favorites-title {
+  color: #31f5ef;
+  margin-top: 15px;
+  font-size: 20px;
+}
+
+.favorite-gif {
+  position: relative;
+  width: 75%;
+  margin-bottom: 15px;
 }

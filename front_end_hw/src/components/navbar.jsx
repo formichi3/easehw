@@ -1,6 +1,6 @@
 import React from 'react';
 import MySearchBar from './searchBar'
-import MyFavorites from './favorites'
+import MyGif from './gif'
 
 import '../style/Navbar.css'
 
@@ -9,7 +9,8 @@ export default class MyNavBar extends React.Component {
   constructor() {
     super();
     this.state = {
-      text: ''
+      text: '',
+      favorites: []
     }
     this.handleChange = this.handleChange.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
@@ -30,7 +31,8 @@ export default class MyNavBar extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-
+    this.setState({favorites: nextProps.favorites.reverse()})
+    console.log("navbar got new props: ", nextProps);
   }
 
   render() {
@@ -38,7 +40,13 @@ export default class MyNavBar extends React.Component {
       <header className="navbar">
         <h1 className="title">Welcome to Joes Gifs</h1>
         <MySearchBar className="searchBar" focus={true} callBack={this.props.callBack}/>
-        <MyFavorites favorites={this.props.favorites}/>
+        <h1 className="favorites-title">Favorites</h1>
+        <div className="favorites">
+          {
+          this.state.favorites.map( (url, index) => (
+              <img className="favorite-gif" src={url}></img>
+          ))}
+        </div>
       </header>
     )
     }
