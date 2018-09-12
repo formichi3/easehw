@@ -1,10 +1,8 @@
 import React from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import MySearchBar from './searchBar'
-import TextField from 'material-ui/TextField';
-import styles from '../style/Navbar.css'
+import MyFavorites from './favorites'
 
-
+import '../style/Navbar.css'
 
 export default class MyNavBar extends React.Component {
 
@@ -31,15 +29,11 @@ export default class MyNavBar extends React.Component {
   }
 
   render() {
-    const inputStyle = {
-      autoFocus: true,
-      hintText: "search gifs...",
-      color: "white"
-    }
     return (
       <header className="navbar">
         <h1 className="title">Welcome to Joes Gifs</h1>
-        <MySearchBar className="searchBar" focus={true}/>
+        <MySearchBar className="searchBar" focus={true} callBack={this.props.callBack}/>
+        <MyFavorites gifs={this.props.gifs}/>
       </header>
     )
     }

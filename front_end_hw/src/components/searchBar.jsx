@@ -1,6 +1,7 @@
 import React from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
+import store from '../store.js'
 
 
 
@@ -24,7 +25,8 @@ export default class MySearchBar extends React.Component {
 
   onKeyPress(event) {
     if (event.key === "Enter"){
-      console.log("Searching!");
+      this.props.callBack(this.state.text)
+      store.searchTerm = this.state.text
     }
   }
 
@@ -40,6 +42,7 @@ export default class MySearchBar extends React.Component {
           id="search"
           placeholder="Search Gifs ..."
           type="search"
+          inputStyle={inputStyle}
           autoFocus={this.props.focus}
           onChange={this.handleChange}
           onKeyPress={this.onKeyPress}

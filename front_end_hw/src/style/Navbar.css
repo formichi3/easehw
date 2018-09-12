@@ -8,6 +8,7 @@
   position: fixed;
   height: 100%;
   width: 20%;
+  align-items: center;
 }
 
 .title {
@@ -16,5 +17,11 @@
 }
 
 .searchBar {
+  align-self: center;
   position: fixed;
+  color: white;
+}
+
+.favorites {
+  align-self: center;
 }
