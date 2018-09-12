@@ -16,6 +16,7 @@ export default class MyNavBar extends React.Component {
   }
 
   componentWillMount(){
+    console.log("props: ", this.props);
   }
 
   handleChange(event) {
@@ -28,12 +29,16 @@ export default class MyNavBar extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+
+  }
+
   render() {
     return (
       <header className="navbar">
         <h1 className="title">Welcome to Joes Gifs</h1>
         <MySearchBar className="searchBar" focus={true} callBack={this.props.callBack}/>
-        <MyFavorites gifs={this.props.gifs}/>
+        <MyFavorites favorites={this.props.favorites}/>
       </header>
     )
     }

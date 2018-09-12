@@ -12,14 +12,14 @@ export default class MyGifs extends React.Component {
       numGifs: 15,
       offSet: 0,
       trending: 1,
-      searchTerm: ""
+      searchTerm: "",
+      forceUpdate: false
     }
     this.trackScrolling = this.trackScrolling.bind(this);
-    this.getMoreTrendingGifs = this.getMoreTrendingGifs.bind(this);
   }
 
   componentWillMount(){
-    this.getMoreTrendingGifs()
+    this.getMoreGifs(this.state.searchTerm)
   }
 
   componentDidMount() {
@@ -31,16 +31,21 @@ export default class MyGifs extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.searchTerm === ""){
-      this.setState({searchTerm: nextProps.searchTerm, offSet: 0, gifs:[], trending: true}, () => {
-        this.getMoreTrendingGifs()
-      });
-    }
+    // check for new search term
     if (nextProps.searchTerm !== this.state.searchTerm){
-      this.setState({searchTerm: nextProps.searchTerm, offSet: 0, gifs:[], trending: false}, () => {
-        this.getMoreSearchGifs()
-      });
+        this.setState({searchTerm: nextProps.searchTerm, offSet: 0, gifs:[], trending: true}, () => {
+          this.getMoreGifs(nextProps.searchTerm)
+        });
     }
+  }
+
+  shouldComponentUpdate(nextProps, nextState){
+    // if ((this.props.favorites === nextProps.favorites && this.props.favorites.length !== 0)){
+    //   return false;
+    // } else {
+    //   return true;
+    // }
+    return true
   }
 
 
@@ -51,44 +56,44 @@ export default class MyGifs extends React.Component {
     const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
     const windowBottom = windowHeight + window.pageYOffset;
     if (windowBottom >= docHeight) {
-      if (this.state.trending){
-        this.getMoreTrendingGifs()
-      } else {
-        this.getMoreSearchGifs(this.state.searchTerm)
-      }
+        this.setState({forceUpdate: true}, () => {
+          this.getMoreGifs(this.state.searchTerm, () => {
+            this.setState({forceUpdate: false})
+          })
+        })
     }
   }
 
-  getMoreTrendingGifs() {
-    let url = `https://api.giphy.com/v1/gifs/trending?api_key=lIT0h2iTdcoFAyUGDu5Qvkb9NgfhOCNN&limit=${this.state.numGifs}&offset=${this.state.offSet}`
-    console.log(url);
-    axios.get(url)
-    .then(response => this.setState({gifs: this.state.gifs.concat(response.data.data), offSet: this.state.offSet+this.state.numGifs}))
-  }
-
-  getMoreSearchGifs(searchTerm) {
-    let url = `https://api.giphy.com/v1/gifs/search?api_key=lIT0h2iTdcoFAyUGDu5Qvkb9NgfhOCNN&q=${this.state.searchTerm}&limit=${this.state.numGifs}&offset=${this.state.offSet}`;
-    console.log(url);
-    axios.get(url)
-    .then(response => this.setState({gifs: this.state.gifs.concat(response.data.data), offSet: this.state.offSet+this.state.numGifs}))
+  getMoreGifs(searchTerm) {
+    if (searchTerm === ""){
+      let url = `https://api.giphy.com/v1/gifs/trending?api_key=lIT0h2iTdcoFAyUGDu5Qvkb9NgfhOCNN&limit=${this.state.numGifs}&offset=${this.state.offSet}`
+      console.log(url);
+      axios.get(url)
+      .then(response => this.setState({gifs: this.state.gifs.concat(response.data.data), offSet: this.state.offSet+this.state.numGifs}))
+    } else {
+      let url = `https://api.giphy.com/v1/gifs/search?api_key=lIT0h2iTdcoFAyUGDu5Qvkb9NgfhOCNN&q=${this.state.searchTerm}&limit=${this.state.numGifs}&offset=${this.state.offSet}`;
+      console.log(url);
+      axios.get(url)
+      .then(response => this.setState({gifs: this.state.gifs.concat(response.data.data), offSet: this.state.offSet+this.state.numGifs}))
+    }
   }
 
   render() {
     return (
-        <div className="row">
-          {this.state.gifs.map( (gif, index) => (
-                <MyGif
-                  key={index}
-                  makeFavorite={this.props.makeFavorite}
-                  id={gif.id}
-                  className="column"
-                  src={gif.images.original.url}
-                  style={{
-                    height: gif.images.original.height*0.5,
-                    width: gif.images.original.width*0.5
-                  }}
-                />
-            ))}
+      <div className="row">
+        {this.state.gifs.map( (gif, index) => (
+          <MyGif
+            key={index}
+            makeFavorite={this.props.makeFavorite}
+            id={gif.id}
+            className="column"
+            src={gif.images.original.url}
+            style={{
+              height: gif.images.original.height*0.5,
+              width: gif.images.original.width*0.5
+            }}
+            />
+          ))}
         </div>
       );
     }

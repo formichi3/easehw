@@ -23,9 +23,13 @@ export default class MyFavorites extends React.Component {
 
   }
 
+  componentWillReceiveProps(nextProps){
+    console.log("Got new props: ", nextProps);
+  }
+
   renderFavs(){
     if(this.props.gifs){
-    this.props.gifs.map( (gif, index) => (
+    this.props.favorites.map( (gif, index) => (
         <MyGif
           key={index}
           className="column"

@@ -17,18 +17,13 @@ class App extends React.Component {
     this.makeFavorite = this.makeFavorite.bind(this);
   }
 
-  shouldComponentUpdate(nextState){
-    // if (Object.keys(this.state.favorites).length !== Object.keys(nextState.favorites).length){
-    //   return false;
-    // } else {
-    //   return true;
-    // }
-    if (this.state.searchTerm === nextState.searchTerm){
-      return false;
-    } else {
-      return true;
-    }
-  }
+  // shouldComponentUpdate(nextProps, nextState){
+  //   // if (this.state.searchTerm === nextState.searchTerm){
+  //   //   return false;
+  //   // } else {
+  //   //   return true;
+  //   // }
+  // }
 
   getSearchTerm = (searchTerm) => {
     this.setState({searchTerm: searchTerm})
@@ -37,8 +32,12 @@ class App extends React.Component {
   makeFavorite = (gif, key) => {
     if (!this.state.favorites[key]){
       var newFavorites = this.state.favorites
+      var newUrls = this.state.urls
       newFavorites[key] = gif
-      console.log(newFavorites);
+      newUrls.push(gif)
+      this.setState({urls: newUrls, favorites: newFavorites}, () => {
+        console.log("Favorites: ", this.state.urls);
+      })
     }
   }
 
@@ -48,10 +47,10 @@ class App extends React.Component {
     return (
       <div className="App">
         <div className="navbar">
-          <MyNavBar callBack={this.getSearchTerm} favorites={this.state.favorites}/>
+          <MyNavBar callBack={this.getSearchTerm} favorites={this.state.urls}/>
         </div>
         <div className="gifs">
-          <MyGifs searchTerm={this.state.searchTerm} makeFavorite={this.makeFavorite}/>
+          <MyGifs searchTerm={this.state.searchTerm} makeFavorite={this.makeFavorite} favorites={this.state.urls}/>
         </div>
       </div>
     );
