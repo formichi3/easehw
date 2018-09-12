@@ -9,6 +9,7 @@
   height: 100%;
   width: 20%;
   align-items: center;
+  box-shadow: 0 0px 8px 0 black;
 }
 
 .title {

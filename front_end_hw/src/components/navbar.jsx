@@ -44,7 +44,7 @@ export default class MyNavBar extends React.Component {
         <div className="favorites">
           {
           this.state.favorites.map( (url, index) => (
-              <img className="favorite-gif" src={url}></img>
+              <img className="favorite-gif" src={url} key={index}></img>
           ))}
         </div>
       </header>

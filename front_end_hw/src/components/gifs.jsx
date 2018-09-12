@@ -18,6 +18,8 @@ export default class MyGifs extends React.Component {
     this.trackScrolling = this.trackScrolling.bind(this);
   }
 
+
+
   componentWillMount(){
     this.getMoreGifs(this.state.searchTerm)
   }
@@ -56,25 +58,37 @@ export default class MyGifs extends React.Component {
     const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight,  html.scrollHeight, html.offsetHeight);
     const windowBottom = windowHeight + window.pageYOffset;
     if (windowBottom >= docHeight) {
-        this.setState({forceUpdate: true}, () => {
-          this.getMoreGifs(this.state.searchTerm, () => {
-            this.setState({forceUpdate: false})
-          })
-        })
+      this.getMoreGifs(this.state.searchTerm)
     }
   }
 
   getMoreGifs(searchTerm) {
+
     if (searchTerm === ""){
       let url = `https://api.giphy.com/v1/gifs/trending?api_key=lIT0h2iTdcoFAyUGDu5Qvkb9NgfhOCNN&limit=${this.state.numGifs}&offset=${this.state.offSet}`
       console.log(url);
       axios.get(url)
-      .then(response => this.setState({gifs: this.state.gifs.concat(response.data.data), offSet: this.state.offSet+this.state.numGifs}))
+      .then(response => {
+        console.log("response", response);
+        if(response.data.data.length === 0){
+          console.log("No gifs found")
+        } else {
+          this.setState({gifs: this.state.gifs.concat(response.data.data), offSet: this.state.offSet+this.state.numGifs})
+        }
+      }
+      )
     } else {
       let url = `https://api.giphy.com/v1/gifs/search?api_key=lIT0h2iTdcoFAyUGDu5Qvkb9NgfhOCNN&q=${this.state.searchTerm}&limit=${this.state.numGifs}&offset=${this.state.offSet}`;
-      console.log(url);
       axios.get(url)
-      .then(response => this.setState({gifs: this.state.gifs.concat(response.data.data), offSet: this.state.offSet+this.state.numGifs}))
+      .then(response =>{
+        console.log(url);
+        console.log("response", response);
+        if(response.data.data.length === 0){
+          console.log("no gifs found");
+        } else {
+          this.setState({gifs: this.state.gifs.concat(response.data.data), offSet: this.state.offSet+this.state.numGifs})
+        }
+      });
     }
   }
 
