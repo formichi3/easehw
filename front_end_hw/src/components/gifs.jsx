@@ -3,17 +3,22 @@ import axios from 'axios'
 import MyGif from './gif.jsx'
 import '../style/Gifs.css'
 
+var randomWord = require('random-words')
+
+const config={headers: {'Access-Control-Allow-Origin': '*'}}
+
 export default class MyGifs extends React.Component {
 
   constructor() {
     super();
     this.state = {
       gifs: [],
-      numGifs: 15,
+      numGifs: 5,
       offSet: 0,
       trending: 1,
       searchTerm: "",
-      forceUpdate: false
+      forceUpdate: false,
+      errorUrl: "api.giphy.com/v1/gifs/search?q=shrug&api_key=lIT0h2iTdcoFAyUGDu5Qvkb9NgfhOCNN&limit=1"
     }
     this.trackScrolling = this.trackScrolling.bind(this);
   }
@@ -34,7 +39,7 @@ export default class MyGifs extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     // check for new search term
-    if (nextProps.searchTerm !== this.state.searchTerm){
+    if (nextProps.searchTerm !== this.state.searchTerm || nextProps.searchTerm === "secretRandomSearchTerm"){
         this.setState({searchTerm: nextProps.searchTerm, offSet: 0, gifs:[], trending: true}, () => {
           this.getMoreGifs(nextProps.searchTerm)
         });
@@ -63,33 +68,27 @@ export default class MyGifs extends React.Component {
   }
 
   getMoreGifs(searchTerm) {
-
+    console.log("get more gifs searchTerm", searchTerm);
+    var url = ""
     if (searchTerm === ""){
-      let url = `https://api.giphy.com/v1/gifs/trending?api_key=lIT0h2iTdcoFAyUGDu5Qvkb9NgfhOCNN&limit=${this.state.numGifs}&offset=${this.state.offSet}`
-      console.log(url);
-      axios.get(url)
-      .then(response => {
-        console.log("response", response);
-        if(response.data.data.length === 0){
-          console.log("No gifs found")
-        } else {
-          this.setState({gifs: this.state.gifs.concat(response.data.data), offSet: this.state.offSet+this.state.numGifs})
-        }
-      }
-      )
-    } else {
-      let url = `https://api.giphy.com/v1/gifs/search?api_key=lIT0h2iTdcoFAyUGDu5Qvkb9NgfhOCNN&q=${this.state.searchTerm}&limit=${this.state.numGifs}&offset=${this.state.offSet}`;
-      axios.get(url)
-      .then(response =>{
-        console.log(url);
-        console.log("response", response);
-        if(response.data.data.length === 0){
-          console.log("no gifs found");
-        } else {
-          this.setState({gifs: this.state.gifs.concat(response.data.data), offSet: this.state.offSet+this.state.numGifs})
-        }
-      });
+      url = `https://api.giphy.com/v1/gifs/trending?api_key=lIT0h2iTdcoFAyUGDu5Qvkb9NgfhOCNN&limit=${this.state.numGifs}&offset=${this.state.offSet}`
     }
+    else if (searchTerm === 'secretRandomSearchTerm') {
+      var randomSearchTerm = randomWord();
+      url = `https://api.giphy.com/v1/gifs/search?api_key=lIT0h2iTdcoFAyUGDu5Qvkb9NgfhOCNN&q=${randomSearchTerm}&limit=${this.state.numGifs}&offset=${this.state.offSet}`;
+      console.log(url);
+    }
+    else {
+      url = `https://api.giphy.com/v1/gifs/search?api_key=lIT0h2iTdcoFAyUGDu5Qvkb9NgfhOCNN&q=${this.state.searchTerm}&limit=${this.state.numGifs}&offset=${this.state.offSet}`;
+    }
+    axios.get(url)
+    .then(response =>{
+      if(response.data.data.length === 0){
+        this.props.showErrorScreen();
+      } else {
+        this.setState({gifs: this.state.gifs.concat(response.data.data), offSet: this.state.offSet+this.state.numGifs})
+      }
+    });
   }
 
   render() {

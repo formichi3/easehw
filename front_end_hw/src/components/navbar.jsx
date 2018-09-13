@@ -1,5 +1,6 @@
 import React from 'react';
 import MySearchBar from './searchBar'
+import MyButtons from './buttons'
 import MyGif from './gif'
 
 import '../style/Navbar.css'
@@ -10,10 +11,12 @@ export default class MyNavBar extends React.Component {
     super();
     this.state = {
       text: '',
-      favorites: []
+      urls: [],
+      favorites: {}
     }
     this.handleChange = this.handleChange.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
+    this.handleUnfavorite = this.handleUnfavorite.bind(this);
   }
 
   componentWillMount(){
@@ -31,8 +34,13 @@ export default class MyNavBar extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({favorites: nextProps.favorites.reverse()})
+    this.setState({urls: nextProps.urls.reverse()})
     console.log("navbar got new props: ", nextProps);
+  }
+
+  handleUnfavorite(e) {
+    console.log("asdf", e.target);
+    this.props.unfavorite(e.target.src, -1, e.target.alt)
   }
 
   render() {
@@ -40,11 +48,12 @@ export default class MyNavBar extends React.Component {
       <header className="navbar">
         <h1 className="title">Welcome to Joes Gifs</h1>
         <MySearchBar className="searchBar" focus={true} callBack={this.props.callBack}/>
+        <MyButtons getSearchTerm={this.props.callBack}/>
         <h1 className="favorites-title">Favorites</h1>
         <div className="favorites">
           {
-          this.state.favorites.map( (url, index) => (
-              <img className="favorite-gif" src={url} key={index}></img>
+          this.state.urls.map( (url, index) => (
+              <img className="favorite-gif" src={url} alt={index} key={index} onClick={this.handleUnfavorite}></img>
           ))}
         </div>
       </header>

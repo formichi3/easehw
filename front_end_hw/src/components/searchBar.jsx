@@ -43,6 +43,7 @@ export default class MySearchBar extends React.Component {
           placeholder="Search Gifs ..."
           type="search"
           inputStyle={inputStyle}
+          style={{width: "85%"}}
           autoFocus={this.props.focus}
           onChange={this.handleChange}
           onKeyPress={this.onKeyPress}
