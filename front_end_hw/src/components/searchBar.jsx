@@ -23,6 +23,7 @@ export default class MySearchBar extends React.Component {
     this.setState({text: event.target.value})
   };
 
+  //listen for enter to set search term for gif search
   onKeyPress(event) {
     if (event.key === "Enter"){
       this.props.callBack(this.state.text)

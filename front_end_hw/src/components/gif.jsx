@@ -1,8 +1,4 @@
 import React from 'react';
-
-import pinkHeart from '../img/heart.png'
-import whiteHeart from '../img/whiteHeart.png'
-
 import '../style/Gif.css'
 
 
@@ -10,22 +6,7 @@ export default class MyGif extends React.Component {
 
   constructor() {
     super();
-    this.state = {
-      favorite: false,
-      src: whiteHeart
-    }
     this.handleClick = this.handleClick.bind(this);
-  }
-  // retrieve top trending gifs, # specified by numGifs in state
-  componentWillMount(){
-
-  }
-
-  componentDidMount() {
-
-  }
-
-  componentsWillUnmount() {
   }
 
   handleClick(e){

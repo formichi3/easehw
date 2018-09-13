@@ -5,15 +5,13 @@ import '../style/Gifs.css'
 
 var randomWord = require('random-words')
 
-const config={headers: {'Access-Control-Allow-Origin': '*'}}
-
 export default class MyGifs extends React.Component {
 
   constructor() {
     super();
     this.state = {
       gifs: [],
-      numGifs: 5,
+      numGifs: 15,
       offSet: 0,
       trending: 1,
       searchTerm: "",
@@ -24,7 +22,7 @@ export default class MyGifs extends React.Component {
   }
 
 
-
+  //start by getting trending gifs
   componentWillMount(){
     this.getMoreGifs(this.state.searchTerm)
   }
@@ -37,8 +35,8 @@ export default class MyGifs extends React.Component {
     window.removeEventListener('scroll', this.trackScrolling)
   }
 
+  //search for new gifs based on the term in the search bar
   componentWillReceiveProps(nextProps) {
-    // check for new search term
     if (nextProps.searchTerm !== this.state.searchTerm || nextProps.searchTerm === "secretRandomSearchTerm"){
         this.setState({searchTerm: nextProps.searchTerm, offSet: 0, gifs:[], trending: true}, () => {
           this.getMoreGifs(nextProps.searchTerm)
@@ -47,15 +45,11 @@ export default class MyGifs extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState){
-    // if ((this.props.favorites === nextProps.favorites && this.props.favorites.length !== 0)){
-    //   return false;
-    // } else {
-    //   return true;
-    // }
     return true
   }
 
 
+  //get more gifs when at the bottom of the page
   trackScrolling() {
     const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
     const body = document.body;
@@ -67,8 +61,8 @@ export default class MyGifs extends React.Component {
     }
   }
 
+  //get gifs from the giphy search or trending api
   getMoreGifs(searchTerm) {
-    console.log("get more gifs searchTerm", searchTerm);
     var url = ""
     if (searchTerm === ""){
       url = `https://api.giphy.com/v1/gifs/trending?api_key=lIT0h2iTdcoFAyUGDu5Qvkb9NgfhOCNN&limit=${this.state.numGifs}&offset=${this.state.offSet}`
@@ -76,7 +70,6 @@ export default class MyGifs extends React.Component {
     else if (searchTerm === 'secretRandomSearchTerm') {
       var randomSearchTerm = randomWord();
       url = `https://api.giphy.com/v1/gifs/search?api_key=lIT0h2iTdcoFAyUGDu5Qvkb9NgfhOCNN&q=${randomSearchTerm}&limit=${this.state.numGifs}&offset=${this.state.offSet}`;
-      console.log(url);
     }
     else {
       url = `https://api.giphy.com/v1/gifs/search?api_key=lIT0h2iTdcoFAyUGDu5Qvkb9NgfhOCNN&q=${this.state.searchTerm}&limit=${this.state.numGifs}&offset=${this.state.offSet}`;
@@ -88,6 +81,11 @@ export default class MyGifs extends React.Component {
       } else {
         this.setState({gifs: this.state.gifs.concat(response.data.data), offSet: this.state.offSet+this.state.numGifs})
       }
+    })
+    //if there is an error, show them Kanye
+    .catch((error) => {
+      console.log("there was an error", error);
+      this.props.showErrorScreen();
     });
   }
 

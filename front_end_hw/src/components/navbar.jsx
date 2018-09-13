@@ -1,7 +1,6 @@
 import React from 'react';
 import MySearchBar from './searchBar'
 import MyButtons from './buttons'
-import MyGif from './gif'
 
 import '../style/Navbar.css'
 
@@ -34,7 +33,7 @@ export default class MyNavBar extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({urls: nextProps.urls.reverse()})
+    this.setState({urls: nextProps.urls});
     console.log("navbar got new props: ", nextProps);
   }
 
@@ -52,7 +51,7 @@ export default class MyNavBar extends React.Component {
         <h1 className="favorites-title">Favorites</h1>
         <div className="favorites">
           {
-          this.state.urls.map( (url, index) => (
+          this.state.urls.reverse().map( (url, index) => (
               <img className="favorite-gif" src={url} alt={index} key={index} onClick={this.handleUnfavorite}></img>
           ))}
         </div>

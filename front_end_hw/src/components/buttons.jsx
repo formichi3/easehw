@@ -14,14 +14,15 @@ export default class MyButtons extends React.Component {
     this.switchToRandom = this.switchToRandom.bind(this);
   }
 
-  componentWillMount(){
-  }
-
+  //return a random search term to display gifs
   switchToRandom() {
+    if (this.state.topSelected){
       this.props.getSearchTerm("secretRandomSearchTerm")
       this.setState({topSelected: false});
+    }
   }
 
+  //return "" to trigger the trending endpoint
   switchToTop() {
     if(!this.state.topSelected){
       this.props.getSearchTerm("")
