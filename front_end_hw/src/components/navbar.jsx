@@ -26,20 +26,34 @@ export default class MyNavBar extends React.Component {
     this.setState({text: event.target.value})
   };
 
+  //listen for 'enter' key to search for gifs
   onKeyPress(event) {
     if (event.key === "Enter"){
       console.log("Searching!");
     }
   }
 
+  //add gif to favorites when received form MyGifs component
   componentWillReceiveProps(nextProps) {
-    this.setState({urls: nextProps.urls});
-    console.log("navbar got new props: ", nextProps);
+    this.setState({favorites: nextProps.favorites}, () => {
+      var pairs = []
+      var favs = this.state.favorites
+      for(var key in favs) {
+        var pair = [key, favs[key]]
+        pairs.unshift(pair)
+      }
+      console.log("pairs", pairs);
+      this.setState({urls: pairs});
+    });
   }
 
+  //remove gif from favorites when clicked
   handleUnfavorite(e) {
-    console.log("asdf", e.target);
-    this.props.unfavorite(e.target.src, -1, e.target.alt)
+    var newFavorites = this.state.favorites;
+    var newPairs = this.state.urls
+    var pairToDelete = [e.target.alt, e.target.src]
+    delete newFavorites[pairToDelete[0]];
+    this.componentWillReceiveProps({favorites: newFavorites});
   }
 
   render() {
@@ -51,9 +65,10 @@ export default class MyNavBar extends React.Component {
         <h1 className="favorites-title">Favorites</h1>
         <div className="favorites">
           {
-          this.state.urls.reverse().map( (url, index) => (
-              <img className="favorite-gif" src={url} alt={index} key={index} onClick={this.handleUnfavorite}></img>
-          ))}
+          this.state.urls.map( (url, index) => (
+              <img className="favorite-gif" src={url[1]} alt={url[0]} key={url[0]} onClick={this.handleUnfavorite}></img>
+          ))
+        }
         </div>
       </header>
     )
