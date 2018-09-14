@@ -16,8 +16,8 @@ export default class MyButtons extends React.Component {
 
   //return a random search term to display gifs
   switchToRandom() {
+    this.props.getSearchTerm("secretRandomSearchTerm")
     if (this.state.topSelected){
-      this.props.getSearchTerm("secretRandomSearchTerm")
       this.setState({topSelected: false});
     }
   }
