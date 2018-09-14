@@ -58,7 +58,11 @@ class App extends React.Component {
           <MyNavBar callBack={this.getSearchTerm} favorites={this.state.favorites} unfavorite={this.makeFavorite}/>
         </div>
         <div className="gifs" style={{display: this.state.gifDisplay}} >
-          <MyGifs searchTerm={this.state.searchTerm} makeFavorite={this.makeFavorite} showErrorScreen={this.showErrorScreen}/>
+          <MyGifs
+            searchTerm={this.state.searchTerm}
+            makeFavorite={this.makeFavorite}
+            showErrorScreen={this.showErrorScreen}
+          />
         </div>
         <div className="error-screen" style={{display: this.state.errorDisplay}}>
           <h1>Oops!... Try searching something else</h1>

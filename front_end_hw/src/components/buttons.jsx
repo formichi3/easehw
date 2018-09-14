@@ -9,6 +9,7 @@ export default class MyButtons extends React.Component {
     super();
     this.state = {
       topSelected: true,
+      errorScreen: false
     }
     this.switchToTop = this.switchToTop.bind(this);
     this.switchToRandom = this.switchToRandom.bind(this);
@@ -24,10 +25,8 @@ export default class MyButtons extends React.Component {
 
   //return "" to trigger the trending endpoint
   switchToTop() {
-    if(!this.state.topSelected){
       this.props.getSearchTerm("")
       this.setState({topSelected: true});
-    }
   }
 
 

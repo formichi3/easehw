@@ -13,25 +13,12 @@ export default class MyNavBar extends React.Component {
       urls: [],
       favorites: {}
     }
-    this.handleChange = this.handleChange.bind(this);
-    this.onKeyPress = this.onKeyPress.bind(this);
     this.handleUnfavorite = this.handleUnfavorite.bind(this);
-  }
-
-  componentWillMount(){
-    console.log("props: ", this.props);
   }
 
   handleChange(event) {
     this.setState({text: event.target.value})
   };
-
-  //listen for 'enter' key to search for gifs
-  onKeyPress(event) {
-    if (event.key === "Enter"){
-      console.log("Searching!");
-    }
-  }
 
   //add gif to favorites when received form MyGifs component
   componentWillReceiveProps(nextProps) {
@@ -42,7 +29,6 @@ export default class MyNavBar extends React.Component {
         var pair = [key, favs[key]]
         pairs.unshift(pair)
       }
-      console.log("favorites to store", this.state.favorites);
       localStorage.setItem('favorites', JSON.stringify(this.state.favorites));
       this.setState({urls: pairs});
     });
