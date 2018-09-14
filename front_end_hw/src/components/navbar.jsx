@@ -42,7 +42,8 @@ export default class MyNavBar extends React.Component {
         var pair = [key, favs[key]]
         pairs.unshift(pair)
       }
-      console.log("pairs", pairs);
+      console.log("favorites to store", this.state.favorites);
+      localStorage.setItem('favorites', JSON.stringify(this.state.favorites));
       this.setState({urls: pairs});
     });
   }

@@ -2,8 +2,7 @@ import React from 'react';
 import axios from 'axios'
 import MyGif from './gif.jsx'
 import '../style/Gifs.css'
-
-var randomWord = require('random-words')
+import randomWord from '../wordlist.js'
 
 export default class MyGifs extends React.Component {
 
@@ -69,6 +68,7 @@ export default class MyGifs extends React.Component {
     }
     else if (searchTerm === 'secretRandomSearchTerm') {
       var randomSearchTerm = randomWord();
+      this.setState({searchTerm: randomSearchTerm})
       url = `https://api.giphy.com/v1/gifs/search?api_key=lIT0h2iTdcoFAyUGDu5Qvkb9NgfhOCNN&q=${randomSearchTerm}&limit=${this.state.numGifs}&offset=${this.state.offSet}`;
     }
     else {

@@ -25,8 +25,7 @@ class App extends React.Component {
   //check if there are any favorites stored locally
   componentDidMount() {
     if(localStorage.favorites){
-      var storedFavorites = JSON.parse(localStorage.getItem("favorites"));
-      this.setState({favorites: storedFavorites})
+      this.setState({favorites: JSON.parse(localStorage.favorites)})
     }
   }
 
