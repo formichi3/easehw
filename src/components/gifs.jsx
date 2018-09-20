@@ -10,7 +10,7 @@ export default class MyGifs extends React.Component {
     super();
     this.state = {
       gifs: [],
-      numGifs: 15,
+      numGifs: 20,
       offSet: 0,
       trending: 1,
       searchTerm: "",
