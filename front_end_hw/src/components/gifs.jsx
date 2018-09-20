@@ -99,6 +99,7 @@ export default class MyGifs extends React.Component {
             id={gif.id}
             className="column"
             src={gif.images.original.url}
+            info={gif}
             style={{
               height: gif.images.original.height*0.5,
               width: gif.images.original.width*0.5
