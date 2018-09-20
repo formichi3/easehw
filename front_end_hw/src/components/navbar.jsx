@@ -37,7 +37,6 @@ export default class MyNavBar extends React.Component {
   //remove gif from favorites when clicked
   handleUnfavorite(e) {
     var newFavorites = this.state.favorites;
-    var newPairs = this.state.urls
     var pairToDelete = [e.target.alt, e.target.src]
     delete newFavorites[pairToDelete[0]];
     this.componentWillReceiveProps({favorites: newFavorites});
